@@ -93,10 +93,10 @@ fun ResultScreen(photosState: MarsUiState, modifier: Modifier = Modifier) {
                     items(photosState.photos) { photo ->
                         Image(
                             painter = rememberImagePainter(data = photo.imgSrc),
-                            contentDescription = null, // Puedes proporcionar una descripción adecuada
+                            contentDescription = null,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(200.dp) // Ajusta la altura según tus necesidades
+                                .height(200.dp)
                                 .padding(8.dp)
                         )
                     }
@@ -106,7 +106,6 @@ fun ResultScreen(photosState: MarsUiState, modifier: Modifier = Modifier) {
                 Text(text = "Error loading photos")
             }
             is MarsUiState.Loading -> {
-                // Puedes mostrar un indicador de carga aquí si lo deseas
                 CircularProgressIndicator(modifier = Modifier.wrapContentSize(Alignment.Center))
             }
         }
