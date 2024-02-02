@@ -7,21 +7,25 @@ import retrofit2.Retrofit
 import retrofit2.http.GET
 
 
-private const val BASE_URL =
-    "https://android-kotlin-fun-mars-server.appspot.com"
+// Base URL for the Mars API
+private const val BASE_URL = "https://android-kotlin-fun-mars-server.appspot.com"
 
-
+// Creating a Retrofit instance for making API requests
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
     .baseUrl(BASE_URL)
     .build()
+
+// Interface defining the API service with a method to get photos
 interface MarsApiService {
     @GET("photos")
     suspend fun getPhotos(): List<MarsPhoto>
 }
 
+// Singleton object to encapsulate the API service creation using Retrofit
 object MarsApi {
-    val retrofitService : MarsApiService by lazy {
+    // Lazy-initialized Retrofit service for accessing the Mars API
+    val retrofitService: MarsApiService by lazy {
         retrofit.create(MarsApiService::class.java)
     }
 }

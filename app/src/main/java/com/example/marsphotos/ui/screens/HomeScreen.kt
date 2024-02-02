@@ -40,6 +40,9 @@ import coil.compose.rememberImagePainter
 import com.example.marsphotos.R
 import com.example.marsphotos.ui.theme.MarsPhotosTheme
 
+/**
+ * Depending on the state, display the appropriate screen
+ */
 @Composable
 fun HomeScreen(
     marsUiState: MarsUiState,
@@ -50,11 +53,13 @@ fun HomeScreen(
         is MarsUiState.Success -> ResultScreen(
             marsUiState, modifier = modifier.fillMaxWidth()
         )
-
         is MarsUiState.Error -> ErrorScreen( modifier = modifier.fillMaxSize())
     }
 }
 
+/**
+ *  Display a loading image
+ */
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
     Image(
@@ -64,6 +69,9 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
     )
 }
 
+/**
+ *  Display an error message and icon when there's an error
+ */
 @Composable
 fun ErrorScreen(modifier: Modifier = Modifier) {
     Column(
@@ -79,16 +87,18 @@ fun ErrorScreen(modifier: Modifier = Modifier) {
 }
 
 /**
- * ResultScreen displaying number of photos retrieved.
+ * ResultScreen displaying a LazyColumn with the photos retrieved.
  */
 @Composable
 fun ResultScreen(photosState: MarsUiState, modifier: Modifier = Modifier) {
+    // Display different content based on the state
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
     ) {
         when (photosState) {
             is MarsUiState.Success -> {
+                // Display a LazyColumn with images when data is successfully loaded
                 LazyColumn {
                     items(photosState.photos) { photo ->
                         Image(
@@ -103,9 +113,11 @@ fun ResultScreen(photosState: MarsUiState, modifier: Modifier = Modifier) {
                 }
             }
             is MarsUiState.Error -> {
+                // Display an error message if there's an error
                 Text(text = "Error loading photos")
             }
             is MarsUiState.Loading -> {
+                // Display a loading indicator while data is being loaded
                 CircularProgressIndicator(modifier = Modifier.wrapContentSize(Alignment.Center))
             }
         }
